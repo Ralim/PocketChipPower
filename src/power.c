@@ -35,7 +35,7 @@ else{
   //printing usage
   printf("This is a small tool for working with the AXP209\r\n");
   printf("usage power [command\r\n");
-  printf("R[0123] - R followed by register number to print out");
+  printf("R[0123] - R followed by register number to print out\r\n");
 }
 close(file);
 }
@@ -62,8 +62,9 @@ printf("Error writing the address: %d \r\n",(write(file,buffer,1)));
 void printREG(int file,int registerNumber)
 {
   char reg = readReg(file,registerNumber);
-  printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+  printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
   printf("Register %d - %s\r\n",registerNumber,registerNames[registerNumber]);
+  printf("0x%02x \r\n",reg);//print raw for user info
   for(int i=7;i>=0;i--)
   {
       if(reg && (1<<i))

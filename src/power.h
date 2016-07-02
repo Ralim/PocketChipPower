@@ -32,7 +32,7 @@ const char *registerNames[] = {
 	"Input Power Status",
 	"Power Mode and charge status",
 	"USB OTG VBUS Status"
-}
+};
 
 char readReg(int file,char address);
 void printREG(int file,int reg);
