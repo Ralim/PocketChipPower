@@ -26,8 +26,13 @@ if(argc >1)
     }
     case 'F':
     {
-      //print the fuel gauge information / colulomb
+      //print the fuel gauge information / Coulomb
       printFuelCoulomb(file);
+    }
+    break;
+    case 'f':
+    {
+      enableFuelCoulomb(file);
     }
     break;
 		default:
@@ -40,6 +45,9 @@ else{
   printf("This is a small tool for working with the AXP209\r\n");
   printf("usage power [command\r\n");
   printf("P \t Print the first 3 registers (Power info status)\r\n");
+  printf("F \t Print the Fuel gauge and Coulomb counter\r\n");
+  printf("f \t Enable the Fuel gauge and Coulomb counter\r\n");
+
 }
 close(file);
 }
@@ -60,6 +68,25 @@ printf("Error writing the address: %d \r\n",(write(file,buffer,1)));
 	printf("Error reading register\r\n");
 	return 0;
 	}
+}
+void writeReg(int file, char address, char value)
+{
+  if(i2c_smbus_write_byte(file,address)<0)
+  {
+  printf("Error writing the address: %d \r\n",(write(file,buffer,1)));
+  return;
+  }
+  if(i2c_smbus_write_byte(file,value)<0)
+  {
+  printf("Error writing the value: %d \r\n",(write(file,buffer,1)));
+  return;
+  }
+  return;
+}
+void enableFuelCoulomb(int file)
+{
+writeReg(file,0xB8,0b10000000);//anyone know what the Decryption stuff is ??
+writeReg(file,0xB9,0b10000000);
 }
 
 void printFuelCoulomb(int file)
