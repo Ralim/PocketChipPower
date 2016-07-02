@@ -23,7 +23,11 @@ if(argc >1)
       printREG(file,0);
       printREG(file,1);
       printREG(file,2);
-
+    }
+    case 'F':
+    {
+      //print the fuel gauge information / colulomb
+      printFuelCoulomb(file);
     }
     break;
 		default:
@@ -35,7 +39,7 @@ else{
   //printing usage
   printf("This is a small tool for working with the AXP209\r\n");
   printf("usage power [command\r\n");
-  printf("R[0123] - R followed by register number to print out\r\n");
+  printf("P \t Print the first 3 registers (Power info status)\r\n");
 }
 close(file);
 }
@@ -58,7 +62,14 @@ printf("Error writing the address: %d \r\n",(write(file,buffer,1)));
 	}
 }
 
+void printFuelCoulomb(int file)
+{
+  //we only need to read two registers here
+  char reg = readReg(file,0xB9);//Fuel Gauge register
 
+    printf("Fuel Gauge enabled : %s\r\n",(reg && (1<<7))?"Suspended":"Operating");
+    printf("Fuel Gauge percentage : %d",reg &~(1<<7));
+}
 void printREG(int file,int registerNumber)
 {
   char reg = readReg(file,registerNumber);

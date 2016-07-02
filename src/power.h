@@ -36,4 +36,5 @@ const char *registerNames[] = {
 
 char readReg(int file,char address);
 void printREG(int file,int reg);
+void printFuelCoulomb(int file);
 #endif //POWER_H_
