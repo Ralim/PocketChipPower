@@ -73,12 +73,13 @@ void writeReg(int file, char address, char value)
 {
   if(i2c_smbus_write_byte(file,address)<0)
   {
-  printf("Error writing the address: %d \r\n",(write(file,buffer,1)));
+  printf("Error writing the address \r\n");
   return;
   }
+
   if(i2c_smbus_write_byte(file,value)<0)
   {
-  printf("Error writing the value: %d \r\n",(write(file,buffer,1)));
+  printf("Error writing the value \r\n");
   return;
   }
   return;
@@ -86,7 +87,7 @@ void writeReg(int file, char address, char value)
 void enableFuelCoulomb(int file)
 {
 writeReg(file,0xB8,0b10000000);//anyone know what the Decryption stuff is ??
-writeReg(file,0xB9,0b10000000);
+writeReg(file,0xB9,0b00000000);
 }
 
 void printFuelCoulomb(int file)
