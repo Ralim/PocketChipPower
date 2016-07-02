@@ -22,13 +22,28 @@ if(argc >1)
 	{
 		switch(argv[i][0])
 		{
-		case 'I':
-			printREG(file,0);
-		break;
+		case 'R':
+    {
+      int x=1;
+      while(argv[i][x])
+      {
+        int registerNumber = (int)argv[i][x]-'0';
+        if(registerNumber>=0 && registerNumber<=10)
+    	  printREG(file,registerNumber);
+	++x;
+      }
+    }
+    break;
 		default:
 		break;
 		}
 	}
+}
+else{
+  //printing usage
+  printf("This is a small tool for working with the AXP209\r\n");
+  printf("usage power [command\r\n");
+  printf("R[0123] - R followed by register number to print out");
 }
 close(file);
 }
