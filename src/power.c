@@ -68,7 +68,23 @@ void printFuelCoulomb(int file)
   char reg = readReg(file,0xB9);//Fuel Gauge register
 
     printf("Fuel Gauge enabled : %s\r\n",(reg && (1<<7))?"Suspended":"Operating");
-    printf("Fuel Gauge percentage : %d",reg &~(1<<7));
+    printf("Fuel Gauge percentage : %d\r\n",reg &~(1<<7));
+    printf("Colulomb Counter :\r\n" );
+    reg = readReg(file,0xB8);//colulomb counter control
+    for(int i=7;i>=0;i--)
+    {
+        if(reg && (1<<i))
+        {
+          //The bit is set so we print out the message for that bit
+          printf("%d \t %s",i+1,registerMessagesOn[3][i]);
+        }
+        else
+        {
+            printf("%d \t %s",i+1,registerMessagesOff[3][i]);
+        }
+        printf("\r\n");
+    }
+
 }
 void printREG(int file,int registerNumber)
 {

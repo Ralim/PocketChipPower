@@ -3,7 +3,7 @@
 /*
 	This is a small utility for interacting with the AXP209 in the chip by nextThing.co
 	By Ben V. Brown <ralim@ralimtek.com>
-	You will need to install the i2c tools package :
+	You will need to install the i2c tools package (i think) :
 	apt-get install i2c-tools libi2c-dev
 
 */
@@ -21,12 +21,14 @@
 const char *registerMessagesOn[][8] = {
 	{"Boot Power Source was ACIN/VBUS","ACIN/VBUS is shorted","Battery is charging","VBus is above VHold","VBus is usable","VBus exists","ACIN is available","ACIN Exists"},
 	{"","","Charge current is less than desired","Charger is in cell activated mode","","Battery Connected","Battery is Charging","Over temperature"},
-	{"Session end satus : Valid","VBUS is valid","VBUS is valid","","","","",""}
+	{"Session end satus : Valid","VBUS is valid","VBUS is valid","","","","",""},
+	{"Decryption complete","Decryption started","","","","Colulomb Counter clear bit set","Colulomb counter suspent bit set","Colulomb gauge enabled"}
 };
 const char *registerMessagesOff[][8] = {
 	{"Boot Power Source was not ACIN/VBUS","ACIN/VBUS is not shorted","Battery is not charging","VBus is below VHold","VBus is not usable","VBus does not exist","ACIN is not available","ACIN does not exist"},
 	{"","","Charging current is in regulation","Charger is not in cell activated mode","","No Battery Connected","Battery is not Charging","No Over Temp"},
-	{"Session end satus : Invalid","VBUS is not valid","VBUS is not valid","","","","",""}
+	{"Session end satus : Invalid","VBUS is not valid","VBUS is not valid","","","","",""},
+	{"Decryption not complete","Decryption not started","","","","Colulomb Counter clear bit NOT set","Colulomb counter suspent bit NOT set","Colulomb gauge disabled"}
 };
 const char *registerNames[] = {
 	"Input Power Status",
