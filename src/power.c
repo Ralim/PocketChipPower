@@ -1,9 +1,5 @@
 #include "power.h"
 
-char readReg(int file,char address);
-void printREG(int file,int reg);
-
-
 int main(int argc, char *argv[])
 {
 int file;
@@ -22,16 +18,12 @@ if(argc >1)
 	{
 		switch(argv[i][0])
 		{
-		case 'R':
+		case 'P':
     {
-      int x=1;
-      while(argv[i][x])
-      {
-        int registerNumber = (int)argv[i][x]-'0';
-        if(registerNumber>=0 && registerNumber<=10)
-    	  printREG(file,registerNumber);
-	++x;
-      }
+      printREG(file,0);
+      printREG(file,1);
+      printREG(file,2);
+
     }
     break;
 		default:
@@ -65,21 +57,24 @@ printf("Error writing the address: %d \r\n",(write(file,buffer,1)));
 	return 0;
 	}
 }
+
+
 void printREG(int file,int registerNumber)
 {
-char reg = readReg(file,registerNumber);
-for(int i=0;i<8;i++)
-{
-  if(reg && (1<<i))
+  char reg = readReg(file,registerNumber);
+  printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n");
+  printf("Register %d - %s\r\n",registerNumber,registerNames[registerNumber]);
+  for(int i=7;i>=0;i--)
   {
-    //The bit is set so we print out the message for that bit
-    printf("%d \t %s",i+1,registerMessagesOn[registerNumber][i]);
+      if(reg && (1<<i))
+      {
+        //The bit is set so we print out the message for that bit
+        printf("%d \t %s",i+1,registerMessagesOn[registerNumber][i]);
+      }
+      else
+      {
+          printf("%d \t %s",i+1,registerMessagesOff[registerNumber][i]);
+      }
+      printf("\r\n");
   }
-  else
-  {
-      printf("%d \t %s",i+1,registerMessagesOff[registerNumber][i]);
-  }
-printf("\r\n");
 }
-}
-
